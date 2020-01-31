@@ -1,2 +1,2 @@
 # vangrinten
-Van der Grinten projections, direct and inverse forms
+Van der Grinten projections I-IV, direct and inverse forms
