@@ -1,13 +1,17 @@
 function [lat, lon] = vangrinten1inv(R, X, Y)
-    eps = 1.0e-5
-    x=abs(X)/(R*pi);
-    y=abs(Y)/(R*pi);
+    eps = 1.0e-5;
+    
+    %Transform to the unit sphere
+    x=abs(X)/R;
+    y=abs(Y)/R;
+
+    %Singular cases
     if (abs(X)<eps) %lat=0
         t=2*y/(1+y^2); 
         lat=sign(Y)*t*pi/2;
         lon=0;
     elseif (abs(Y)<eps) %lon=0
-        lat=0; lon=sign(X)*pi;
+        lat=0; lon=sign(X)*x * pi;
     else
         %Solve quadratic equation for s
         a=x;
@@ -15,7 +19,7 @@ function [lat, lon] = vangrinten1inv(R, X, Y)
         c=-x;
         D=b^2-4*a*c;
         s=(-b+sqrt(D))/(2*a);
-        lon=sign(X)*s*pi*180/pi;
+        lon=sign(X)*s*pi;
 
         %%Solve the cubic equation for t
         at=x^4+2*x^2*y*(1+y)+(1+y)^2*(1+y^2);
@@ -31,7 +35,7 @@ function [lat, lon] = vangrinten1inv(R, X, Y)
         theta = acos(R_/sqrt(-Q_^3));
 
         t=2*sqrt(-Q_)*cos((theta+4*pi)/3)-A/3;
-        lat=sign(Y)*pi/2*t*180/pi;
+        lat=sign(Y)*pi/2*t;
     end
 end
 
